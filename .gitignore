@@ -1,0 +1,8 @@
+*.yaml
+gradlew.bat
+Topics/
+.idea/
+*.html
+out/
+build/
+.gradle/
