@@ -1,8 +1,9 @@
 package converter;
 
 import java.util.Scanner;
-import static converter.Conversion.*;
+
 import static converter.UserInterface.*;
+import static converter.ConversionInterface.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,24 +14,14 @@ public class Main {
             command = askCommand(scanner);
             if (command.charAt(0) == '/') {
                 command = command.substring(1);
-                switch (command) {
-                    case "from": {
-                        final var number = askDecimalNumber(scanner);
-                        final var radix = askBase(scanner, command);
-                        System.out.printf("%s: %s\n", getResultLine(command),
-                                convertDecimalToBase(number, radix));
-                        break;
-                    }
-
-                    case "to": {
-                        final var sourceNumber = askSourceNumber(scanner);
-                        final var radix = askBase(scanner, command);
-                        System.out.printf("%s: %s\n", getResultLine(command),
-                                convertToDecimalFromBase(sourceNumber, radix));
-                        break;
-                    }
+                if (isExists(command)) {
+                    final var value = askNumber(scanner, command);
+                    final var base = askBase(scanner, command);
+                    System.out.printf(String.format("%%s: %%%c\n", getFormatCharacter(command)),
+                            getResultLine(command),
+                            getConverter(command).convert(value, base).get());
+                    System.out.println();
                 }
-                System.out.println();
             } else {
                 System.out.println("Command should start with '/'");
             }
@@ -42,14 +33,9 @@ public class Main {
         return scanner.nextInt();
     }
 
-    private static int askDecimalNumber(Scanner scanner) {
-        System.out.printf("%s: ", getNumberLine("from"));
-        return scanner.nextInt();
-    }
-
-    private static String askSourceNumber(Scanner scanner) {
-        System.out.printf("%s: ", getNumberLine("to"));
-        return scanner.next();
+    private static Value askNumber(Scanner scanner, String command) {
+        System.out.printf("%s: ", getNumberLine(command));
+        return getValueSupplier(command).apply(scanner);
     }
 
     private static String askCommand(Scanner scanner) {

@@ -1,10 +1,13 @@
 package converter;
 
+import static converter.ConversionInterface.*;
+
 public class Conversion {
     private static final int DECIMAL_BASE = 10;
 
-    public static String convertDecimalToBase(int number, int radix) {
+    public static Value convertDecimalToBase(Value value, int radix) {
         var result = "";
+        int number = value.get();
         final var digits = "0123456789ABCDEF";
 
         do {
@@ -14,16 +17,17 @@ public class Conversion {
             result = digits.charAt(remainder) + result;
         } while (number != 0);
 
-        return result;
+        return Value.of(result);
     }
 
-    public static long convertToDecimalFromBase(String number, int radix) {
+    public static Value convertToDecimalFromBase(Value value, int radix) {
         var currentPower = 1L;
         var result = 0L;
-        for (var i = number.length() - 1; i >= 0; --i, currentPower *= radix) {
-            result += asValue(number.charAt(i)) * currentPower;
+        final String s = value.get();
+        for (var i = s.length() - 1; i >= 0; --i, currentPower *= radix) {
+            result += asValue(s.charAt(i)) * currentPower;
         }
-        return result;
+        return Value.of(result);
     }
 
     private static int asValue(char digit) {
