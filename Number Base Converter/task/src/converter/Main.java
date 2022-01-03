@@ -3,6 +3,8 @@ package converter;
 import java.util.Scanner;
 
 public class Main {
+    private static final int DECIMAL_BASE = 10;
+
     public static void main(String[] args) {
         final var scanner = new Scanner(System.in);
         final var number = askNumber(scanner);
@@ -23,6 +25,19 @@ public class Main {
         } while (number != 0);
 
         return result;
+    }
+    
+    private static long convertToDecimalFromBase(String number, int radix) {
+        var currentPower = 1L;
+        var result = 0L;
+        for (var i = number.length() - 1; i >= 0; --i, currentPower *= radix) {
+            result += asValue(number.charAt(i)) * currentPower;
+        }
+        return result;
+    }
+
+    private static int asValue(char digit) {
+        return Character.isDigit(digit) ? digit - '0' : Character.toUpperCase(digit) - 'A' + DECIMAL_BASE;
     }
 
     private static int askBase(Scanner scanner) {
