@@ -12,7 +12,7 @@ public class ConversionParameters {
                     "Enter number in decimal system",
                     "target",
                     "Conversion result",
-                    scanner -> Value.of(scanner::nextInt),
+                    scanner -> Value.of(scanner::nextBigInteger),
                     Conversion::convertDecimalToBase, 's'),
             "to", new Parameters(
                     "Enter source number",

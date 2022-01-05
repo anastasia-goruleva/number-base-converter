@@ -1,5 +1,6 @@
 package converter;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 import static converter.ConversionUtilities.Value;
@@ -33,9 +34,9 @@ public class UserInterface {
         } while (!"exit".equals(command));
     }
 
-    private int askBase(String command) {
+    private BigInteger askBase(String command) {
         System.out.printf("Enter %s base: ", parameters.getBaseLine(command));
-        return scanner.nextInt();
+        return scanner.nextBigInteger();
     }
 
     private Value askNumber(String command) {

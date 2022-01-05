@@ -1,11 +1,12 @@
 package converter;
 
+import java.math.BigInteger;
 import java.util.function.Supplier;
 
 public class ConversionUtilities {
     @FunctionalInterface
     public interface Converter {
-        Value convert(Value value, int base);
+        Value convert(Value value, BigInteger base);
     }
 
     public static abstract class Value {
