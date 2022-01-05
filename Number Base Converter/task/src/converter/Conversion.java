@@ -8,13 +8,12 @@ public class Conversion {
     public static Value convertDecimalToBase(Value value, int radix) {
         var result = "";
         int number = value.get();
-        final var digits = "0123456789ABCDEF";
 
         do {
             final var quotient = number / radix;
             final var remainder = number % radix;
             number = quotient;
-            result = digits.charAt(remainder) + result;
+            result = asDigit(remainder) + result;
         } while (number != 0);
 
         return Value.of(result);
@@ -32,5 +31,9 @@ public class Conversion {
 
     private static int asValue(char digit) {
         return Character.isDigit(digit) ? digit - '0' : Character.toUpperCase(digit) - 'A' + DECIMAL_BASE;
+    }
+
+    private static char asDigit(int value) {
+        return (char) (value < DECIMAL_BASE ? '0' + value : 'A' + (value - DECIMAL_BASE));
     }
 }
