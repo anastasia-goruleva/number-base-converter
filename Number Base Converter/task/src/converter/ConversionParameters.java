@@ -7,7 +7,7 @@ import java.util.function.Function;
 import static converter.ConversionUtilities.*;
 
 public class ConversionParameters {
-    private static final Map<String, Parameters> parameters = Map.of(
+    private final Map<String, Parameters> parameters = Map.of(
             "from", new Parameters(
                     "Enter number in decimal system",
                     "target",
@@ -43,31 +43,31 @@ public class ConversionParameters {
         }
     }
 
-    public static String getBaseLine(String command) {
+    public String getBaseLine(String command) {
         return parameters.get(command).baseLine;
     }
 
-    public static String getNumberLine(String command) {
+    public String getNumberLine(String command) {
         return parameters.get(command).numberLine;
     }
 
-    public static String getResultLine(String command) {
+    public String getResultLine(String command) {
         return parameters.get(command).resultLine;
     }
 
-    public static Function<Scanner, Value> getValueSupplier(String command) {
+    public Function<Scanner, Value> getValueSupplier(String command) {
         return parameters.get(command).supplier;
     }
 
-    public static Converter getConverter(String command) {
+    public Converter getConverter(String command) {
         return parameters.get(command).converter;
     }
 
-    public static boolean isExists(String command) {
+    public boolean isExists(String command) {
         return parameters.containsKey(command);
     }
 
-    public static char getFormatCharacter(String command) {
+    public char getFormatCharacter(String command) {
         return parameters.get(command).formatCharacter;
     }
 }
