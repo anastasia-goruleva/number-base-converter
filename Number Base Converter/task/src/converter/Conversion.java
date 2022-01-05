@@ -1,6 +1,6 @@
 package converter;
 
-import static converter.ConversionInterface.*;
+import static converter.ConversionUtilities.*;
 
 public class Conversion {
     private static final int DECIMAL_BASE = 10;

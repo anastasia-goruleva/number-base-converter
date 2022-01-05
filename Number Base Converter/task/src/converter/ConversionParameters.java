@@ -4,36 +4,36 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import static converter.ConversionInterface.*;
+import static converter.ConversionUtilities.*;
 
-public class UserInterface {
-    private static final Map<String, ConversionParameters> parameters = Map.of(
-            "from", new ConversionParameters(
+public class ConversionParameters {
+    private static final Map<String, Parameters> parameters = Map.of(
+            "from", new Parameters(
                     "Enter number in decimal system",
                     "target",
                     "Conversion result",
                     scanner -> Value.of(scanner::nextInt),
                     Conversion::convertDecimalToBase, 's'),
-            "to", new ConversionParameters(
+            "to", new Parameters(
                     "Enter source number",
                     "source",
                     "Conversion to decimal result",
                     scanner -> Value.of(scanner::next),
                     Conversion::convertToDecimalFromBase, 'd'));
 
-    private static class ConversionParameters {
+    private static class Parameters {
         public final String numberLine;
         public final String baseLine;
         public final String resultLine;
 
         public final Function<Scanner, Value> supplier;
-        public final ConversionFunction converter;
+        public final Converter converter;
 
         public final char formatCharacter;
 
-        public ConversionParameters(String numberLine, String baseLine, String resultLine,
-                                    Function<Scanner, Value> supplier, ConversionFunction converter,
-                                    char formatCharacter) {
+        public Parameters(String numberLine, String baseLine, String resultLine,
+                          Function<Scanner, Value> supplier, Converter converter,
+                          char formatCharacter) {
             this.numberLine = numberLine;
             this.baseLine = baseLine;
             this.resultLine = resultLine;
@@ -59,7 +59,7 @@ public class UserInterface {
         return parameters.get(command).supplier;
     }
 
-    public static ConversionFunction getConverter(String command) {
+    public static Converter getConverter(String command) {
         return parameters.get(command).converter;
     }
 

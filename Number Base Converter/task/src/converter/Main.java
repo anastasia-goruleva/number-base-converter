@@ -2,8 +2,8 @@ package converter;
 
 import java.util.Scanner;
 
-import static converter.UserInterface.*;
-import static converter.ConversionInterface.*;
+import static converter.ConversionParameters.*;
+import static converter.ConversionUtilities.*;
 
 public class Main {
     public static void main(String[] args) {

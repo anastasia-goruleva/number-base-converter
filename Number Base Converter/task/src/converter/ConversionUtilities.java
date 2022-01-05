@@ -2,20 +2,20 @@ package converter;
 
 import java.util.function.Supplier;
 
-public class ConversionInterface {
+public class ConversionUtilities {
+    @FunctionalInterface
+    public interface Converter {
+        Value convert(Value value, int base);
+    }
+
     public static abstract class Value {
         public abstract <T> T get();
 
-        public static <T> GenericValue<T> of(Supplier<T> supplier) {
-            return new GenericValue<>(supplier.get());
+        public static <T> Value of(Supplier<T> supplier) {
+            return of(supplier.get());
         }
 
-        public static <T> GenericValue<T> of(T value) { return new GenericValue<>(value); }
-    }
-
-    @FunctionalInterface
-    public interface ConversionFunction {
-        Value convert(Value value, int base);
+        public static <T> Value of(T value) { return new GenericValue<>(value); }
     }
 
     private static class GenericValue<T> extends Value {
