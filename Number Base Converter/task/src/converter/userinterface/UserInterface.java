@@ -1,11 +1,11 @@
 package converter.userinterface;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-import static converter.Conversion.convertDecimalToBase;
-import static converter.Conversion.convertToDecimalFromBase;
+import static converter.Conversion.*;
 import static converter.ConversionUtilities.Value;
 
 public class UserInterface {
@@ -39,11 +39,23 @@ public class UserInterface {
     }
 
     public static void performConversion(String command) {
-        final var sourceRadix = BigInteger.valueOf(bases[0]);
-        final var destinationRadix = BigInteger.valueOf(bases[1]);
-        final var decimalForm = convertToDecimalFromBase(Value.of(command), sourceRadix);
-        final var result = convertDecimalToBase(decimalForm, destinationRadix);
-        System.out.printf("Conversion result: %s\n\n", result.<String>get());
+        final var numberParts = command.split("\\.");
+        final var decimalIntPart =
+                convertToDecimalFromBase(Value.of(numberParts[0]), BigInteger.valueOf(bases[0]));
+        final var resultIntPart =
+                convertDecimalToBase(decimalIntPart, BigInteger.valueOf(bases[1]));
+        System.out.printf("Conversion result: %s", resultIntPart.<String>get());
+
+        if (numberParts.length > 1) {
+            final var decimalFracPart =
+                    convertToDecimalFractionFromBase(Value.of(numberParts[1]), BigDecimal.valueOf(bases[0]));
+            final var resultFracPart =
+                    convertDecimalFractionToBase(decimalFracPart, BigDecimal.valueOf(bases[1]));
+            System.out.printf(".%s",
+                    resultFracPart.<String>get());
+        }
+
+        System.out.println();
     }
 
     private String askCommand(Menu menu) {
